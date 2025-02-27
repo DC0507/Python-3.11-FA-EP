@@ -4,9 +4,9 @@ pool:
  vmImage: ubuntu-latest
 steps:
 - task: UsePythonVersion@0
-  displayName: "Set Python version to 3.10"
+  displayName: "Set Python version to 3.11"
   inputs:
-  versionSpec: '3.10'
+  versionSpec: '3.11'
   architecture: 'x64'
 - bash: |
    if [ -f extensions.csproj ]
@@ -24,9 +24,11 @@ steps:
   inputs:
    PathtoPublish: '$(System.DefaultWorkingDirectory)/build$(Build.BuildId).zip'
    artifactName: 'drop'
+   ################################
 - task: AzureFunctionApp@2
    inputs:
-     connectedServiceNameARM: coicsaazurefunctionconn
+     connectedServiceNameARM: FA3877_Connection
      appType: functionAppLinux
-     appName: COICSADataQualityCheck
+     appName: fa-test-3877
      package: $(System.DefaultWorkingDirectory)/build$(Build.BuildId).zip
+     deploymentMethod: 'auto'
